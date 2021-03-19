@@ -1,7 +1,6 @@
-#include "Statystyki.hh"
+#include "Zlicz.hh"
+#include<iostream>
+ 
+ using namespace std;
 
-
-/*
- * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
- * w pliku naglowkowym.
- */
+ 
