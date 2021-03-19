@@ -23,12 +23,9 @@ struct WyrazenieZesp {
 };
 
 
-/*
- * Funkcje ponizej nalezy zdefiniowac w module.
- *
- */
+/* Nagłówki funkcji dla wyrażenia zespolonego*/
 
-
+void Wczytaj(WyrazenieZesp &WyrZ);
 void Wyswietl(WyrazenieZesp  WyrZ);
 LZespolona Oblicz(WyrazenieZesp  WyrZ);
 

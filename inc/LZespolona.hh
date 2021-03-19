@@ -17,14 +17,17 @@ struct  LZespolona {
 };
 
 
-/*
- * Dalej powinny pojawic sie zapowiedzi definicji przeciazen operatorow
- */
+/* Przeciązenia operatorów operacji arytmetycznych oraz dodatkowe funkcje*/
 
-bool  operator == (LZespolona  Skl1,  LZespolona  Skl2);
 
 LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2);
-
-LZespolona operator / (LZespolona Skl1, double Skl2);
+LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2);
+LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2);
+LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2);
+LZespolona  operator / (LZespolona  Skl1,  double  Skl2);
+void Wczytaj (LZespolona &Skl1);
+LZespolona Sprzezenie(LZespolona Skl2);
+double Modul2(LZespolona Skl2);
+void Wyswietl(LZespolona);
 
 #endif
