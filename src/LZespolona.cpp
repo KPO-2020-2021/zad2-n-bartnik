@@ -17,6 +17,7 @@ void Wyswietl(LZespolona Skl1)
   cout << "(" << Skl1.re << showpos << Skl1.im << noshowpos << "i)";
 }
 
+
 /*Sprzezenie liczby zespolonej*/
 LZespolona Sprzezenie(LZespolona Skl2)
 {
@@ -77,8 +78,12 @@ LZespolona operator/(LZespolona Skl1, double Skl2)
   return Wynik;
 }
 /*Prototyp wczytywania przez strumień dla liczby zespolonej*/
-LZespolona istream &operator >> (istream& Skl1);{
+ /*istream& operator >> (istream &StrWej, LZespolona Skl1){
   char nawias_l, nawias_p, i;
-  cin >> nawias_l >> Skl1.re >> Skl1.im >> i >> nawias_p;
+  StrWej >> nawias_l >> Skl1.re >> Skl1.im >> i >> nawias_p;
+  return StrWej;
 }
 
+void WczytajZnak(istream& StrWej, char znak){
+  
+}*/
