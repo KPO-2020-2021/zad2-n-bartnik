@@ -7,9 +7,9 @@ __start__: ${TRGDIR}/test_arytm_zesp
 	${TRGDIR}/test_arytm_zesp  latwy
 
 ${TRGDIR}/test_arytm_zesp: ${OBJ} ${OBJ}/main.o ${OBJ}/LZespolona.o\
-                     ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o ${OBJ}/BazaTestu.o ${OBJ}/Zlicz.o
+                     ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o ${OBJ}/BazaTestu.o ${OBJ}/Statystyki.o
 	g++ -o ${TRGDIR}/test_arytm_zesp ${OBJ}/main.o ${OBJ}/LZespolona.o\
-                     ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o ${OBJ}/Zlicz.o
+                     ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o ${OBJ}/Statystyki.o
 
 ${OBJ}:
 	mkdir ${OBJ}
@@ -32,8 +32,8 @@ ${OBJ}/BazaTestu.o: src/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
                        inc/LZespolona.hh
 	g++ -c ${FLAGS} -o ${OBJ}/BazaTestu.o src/BazaTestu.cpp
 
-${OBJ}/Zlicz.o: src/Zlicz.cpp inc/Zlicz.hh
-	g++ -c ${FLAGS} -o ${OBJ}/Zlicz.o src/Zlicz.cpp
+${OBJ}/Statystyki.o: src/Statystyki.cpp inc/Statystyki.hh
+	g++ -c ${FLAGS} -o ${OBJ}/Statystyki.o src/Statystyki.cpp
 
 
 
