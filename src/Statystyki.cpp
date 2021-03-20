@@ -1,4 +1,4 @@
-#include "Zlicz.hh"
+#include "Statystyki.hh"
 #include<iostream>
  
  using namespace std;
