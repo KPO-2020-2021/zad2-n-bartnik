@@ -1,10 +1,10 @@
-
-TRGDIR=./
+TRGDIR=.
 OBJ=./obj
+SRC=./src
+INC=./inc
+TESTS=./tests
+TBIN=./tests/bin
 FLAGS= -Wall -pedantic -std=c++14 -iquote inc
-
-__start__: ${TRGDIR}/test_arytm_zesp
-	${TRGDIR}/test_arytm_zesp  latwy
 
 ${TRGDIR}/test_arytm_zesp: ${OBJ} ${OBJ}/main.o ${OBJ}/LZespolona.o\
                      ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o ${OBJ}/BazaTestu.o ${OBJ}/Statystyki.o
@@ -14,28 +14,40 @@ ${TRGDIR}/test_arytm_zesp: ${OBJ} ${OBJ}/main.o ${OBJ}/LZespolona.o\
 ${OBJ}:
 	mkdir ${OBJ}
 
-${OBJ}/main.o: src/main.cpp inc/LZespolona.hh inc/BazaTestu.hh
-	g++ -c ${FLAGS} -o ${OBJ}/main.o src/main.cpp
+${OBJ}/main.o: ${SRC}/main.cpp inc/LZespolona.hh inc/BazaTestu.hh
+	g++ -c ${FLAGS} -o ${OBJ}/main.o ${SRC}/main.cpp
 
-${OBJ}/LZespolona.o: src/LZespolona.cpp inc/LZespolona.hh
-	g++ -c ${FLAGS} -o ${OBJ}/LZespolona.o src/LZespolona.cpp
+${OBJ}/LZespolona.o: ${SRC}/LZespolona.cpp inc/LZespolona.hh
+	g++ -c ${FLAGS} -o ${OBJ}/LZespolona.o ${SRC}/LZespolona.cpp
 
-${OBJ}/BazaTestu.o: src/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
+${OBJ}/BazaTestu.o: ${SRC}/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
                        inc/LZespolona.hh
-	g++ -c ${FLAGS} -o ${OBJ}/BazaTestu.o src/BazaTestu.cpp
+	g++ -c ${FLAGS} -o ${OBJ}/BazaTestu.o ${SRC}/BazaTestu.cpp
 
-${OBJ}/WyrazenieZesp.o: src/WyrazenieZesp.cpp inc/WyrazenieZesp.hh\
+${OBJ}/WyrazenieZesp.o: ${SRC}/WyrazenieZesp.cpp inc/WyrazenieZesp.hh\
                        inc/LZespolona.hh
-	g++ -c ${FLAGS} -o ${OBJ}/WyrazenieZesp.o src/WyrazenieZesp.cpp
+	g++ -c ${FLAGS} -o ${OBJ}/WyrazenieZesp.o ${SRC}/WyrazenieZesp.cpp
 
-${OBJ}/BazaTestu.o: src/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
-                       inc/LZespolona.hh
-	g++ -c ${FLAGS} -o ${OBJ}/BazaTestu.o src/BazaTestu.cpp
+${OBJ}/Statystyki.o: ${SRC}/Statystyki.cpp inc/Statystyki.hh
+	g++ -c ${FLAGS} -o ${OBJ}/Statystyki.o ${SRC}/Statystyki.cpp
 
-${OBJ}/Statystyki.o: src/Statystyki.cpp inc/Statystyki.hh
-	g++ -c ${FLAGS} -o ${OBJ}/Statystyki.o src/Statystyki.cpp
+${TBIN}/test_1: ${TBIN} ${OBJ}/LZespolona.o 
+	g++ -o ${TESTS}/bin/test_1 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test1.cpp ${OBJ}/LZespolona.o ${OBJ}/WyrazenieZesp.o ${OBJ}/Statystyki.o
+
+${TBIN}/test_2: ${TBIN} ${OBJ}/LZespolona.o 
+	g++ -o ${TESTS}/bin/test_2 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test2.cpp ${OBJ}/LZespolona.o ${OBJ}/WyrazenieZesp.o ${OBJ}/Statystyki.o
 
 
+${TBIN}:
+	mkdir ${TBIN}
 
-clear:
-	rm -f ${TRGDIR}/test_arytm_zesp ${OBJ}/*
+test:  ${TBIN}/test_1 ${TBIN}/test_2
+	${TBIN}/test_1 
+	${TBIN}/test_2
+ latwy:
+	${TRGDIR}/test_arytm_zesp latwy
+trudny:
+	${TRGDIR}/test_arytm_zesp trudny
+
+clean:
+	rm -f ${TRGDIR}/test_arytm_zesp ${OBJ}/* ${TBIN}/*
