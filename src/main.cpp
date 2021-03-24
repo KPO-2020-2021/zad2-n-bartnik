@@ -2,14 +2,12 @@
 #include "BazaTestu.hh"
 #include "LZespolona.hh"
 #include "WyrazenieZesp.hh"
+#include "Statystyki.hh"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-  LZespolona zesp1, zesp2;
-  zesp1.re = 1;
-  zesp1.im = 2;
 
   if (argc < 2)
   {
@@ -33,16 +31,45 @@ int main(int argc, char **argv)
   cout << endl;
 
   WyrazenieZesp WyrZ_PytanieTestowe;
-  LZespolona zespolona;
+  LZespolona zespolona, zesp1;
+  Statystyka statystyka;
+  Inicjuj(statystyka);
 
   while (PobierzNastpnePytanie(&BazaT, &WyrZ_PytanieTestowe))
   {
     cout << " Podaj wynik wyrazenia:  ";
-    Wyswietl(WyrZ_PytanieTestowe); /*Sprawdzenie wyświetlania pytania*/
-    Wczytaj(zespolona);/*Sprawdzenie wczytywania liczby zespolonej*/
-    cout<<endl;
+    cout << WyrZ_PytanieTestowe << " "; /*Sprawdzenie wyświetlania pytania*/
+    cin >> zespolona;                   /*Sprawdzenie wczytywania liczby zespolonej*/
+    /*Operacje, ktore dzieja sie w przypadku gdy uzytkownik wpisze nieprawidlowe znaki*/
+    if (cin.fail())
+    {
+      cout << "Blad zapisu liczby zespolonej!" << endl;
+      cin.clear();             /* 'naprawia' failstate i strumien dziala poprawnie*/
+      cin.ignore(99999, '\n'); /*ignoruje 99999 znakow lub do konca linii*/
+      Zlicz_pyt(statystyka); /*Liczy pytanie*/
+    }
+    else
+    {
+      zesp1 = Oblicz(WyrZ_PytanieTestowe);
+      cout << "Poprawny wynik to: " << zesp1 << endl;
+    }
+    if (zespolona == zesp1)
+    {
+      cout << "Poprawna odpowiedz" << endl;
+      Zlicz_pyt(statystyka);  /*Liczy pytanie*/
+      Zlicz_pkt(statystyka);  /*Liczy punkt*/
+    }
+    else
+    {
+      Zlicz_pyt(statystyka);  /*Liczy pytanie*/
+      cout << "Zla odpowiedz";
+    }
   }
-
+  cout << endl;
+/*Wyswietlanie koncowej statystyki*/
+  Oblicz(statystyka);
+  Oblicz_zle(statystyka);
+  Wyswietl(statystyka);
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;
