@@ -1,37 +1,40 @@
 #include "WyrazenieZesp.hh"
 #include <iostream>
 using namespace std;
-/*Wyświetlanie wyrazenia zespolonego. Do tego celu potrzebna była funkcja Wywietl dla liczby zespolonej. 
-Za jej pomocą funkcja Wyswietl dla wyrazenia wczytuje liczby zespolone, za pomocą funcji switch wyswietla operator okreslony w funkcji Operator*/
+/*Wyczytywanie wyrazenia zespolonego. Do tego celu potrzebne jest przesuniecie operatora bitowego w lewo dla liczby zespolonej. 
+Za jej pomocą operator bitowy przesuniecia bitowego w lewo dla wyrazenia wyczytuje liczby zespolone, 
+za pomocą funcji switch wczytuje operator okreslony w funkcji Operator*/
 
-void Wyswietl(WyrazenieZesp WyrZ)
+ostream &operator<<(ostream &StrWyj, const WyrazenieZesp &WyrZ)
 {
-    Wyswietl(WyrZ.Arg1);
+    StrWyj << (WyrZ.Arg1);
     switch (WyrZ.Op)
     {
     case Op_Dodaj:
-        cout << "+";
+        StrWyj << "+";
         break;
     case Op_Odejmij:
-        cout << "-";
+        StrWyj << "-";
         break;
     case Op_Mnoz:
-        cout << "*";
+        StrWyj << "*";
         break;
     case Op_Dziel:
-        cout << "/";
+        StrWyj << "/";
         break;
     }
-    Wyswietl(WyrZ.Arg2);
+    StrWyj << (WyrZ.Arg2);
+    return StrWyj;
 }
-/*Wczytywanie wyrazenia zespolonego. Do tego celu potrzebna była funkcja Wczytaj dla liczby zespolonej. 
-Za jej pomocą funkcja Wczytaj dla wyrazenia wczytuje liczby zespolone, za pomocą funcji switch wczytuje operator okreslony w funkcji Operator*/
+/*Wczytywanie wyrazenia zespolonego. Do tego celu potrzebne jest przesuniecie operatora bitowego w prawo dla liczby zespolonej. 
+Za jej pomocą operator bitowy przesuniecia bitowego w prawo dla wyrazenia wczytuje liczby zespolone, 
+za pomocą funcji switch wczytuje operator okreslony w funkcji Operator*/
 
-void Wczytaj(WyrazenieZesp &WyrZ)
+istream &operator>>(istream &StrWe, WyrazenieZesp &WyrZ)
 {
     char znak;
-    Wczytaj(WyrZ.Arg1);
-    cin >> znak;
+    StrWe >> (WyrZ.Arg1);
+    StrWe >> znak;
     switch (znak)
     {
     case '+':
@@ -46,8 +49,12 @@ void Wczytaj(WyrazenieZesp &WyrZ)
     case '/':
         WyrZ.Op = Op_Dziel;
         break;
+    default:
+        StrWe.setstate(ios::failbit);
+        break;
     }
-Wczytaj(WyrZ.Arg2);
+    StrWe >> WyrZ.Arg2;
+    return StrWe;
 }
 /*Funkcja wykonuje odpowiednie działanie dla zadanego operatora*/
 LZespolona Oblicz(WyrazenieZesp WyrZ)
