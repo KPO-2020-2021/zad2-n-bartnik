@@ -25,8 +25,11 @@ struct WyrazenieZesp {
 
 /* Nagłówki funkcji dla wyrażenia zespolonego*/
 
-void Wczytaj(WyrazenieZesp &WyrZ);
-void Wyswietl(WyrazenieZesp  WyrZ);
+//void Wczytaj(WyrazenieZesp &WyrZ);
+//void Wyswietl(WyrazenieZesp  WyrZ);
 LZespolona Oblicz(WyrazenieZesp  WyrZ);
+istream &operator>>(istream &StrWe, WyrazenieZesp &WyrZ);
+ostream &operator<<(ostream &StrWyj, const WyrazenieZesp &WyrZ);
+
 
 #endif
