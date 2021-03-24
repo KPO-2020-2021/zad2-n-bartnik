@@ -1,22 +1,11 @@
 #include <math.h>
-#include<string>
+#include <string>
 #include <iostream>
 #include <iomanip>
 #include "LZespolona.hh"
-
+#include "Statystyki.hh"
+#define MIN 0.001 /*Minimalna wartosc roznicy dla operatora porownania*/
 using namespace std;
-/*Funkcja wczytująca liczbę zespolną  w formule (a+bi)*/
-void Wczytaj (LZespolona &Skl1)
-{
-  char nawias_l, nawias_p, i;
-  cin >> nawias_l >> Skl1.re >> Skl1.im >> i >> nawias_p;
-}
-/*Funkcja wyswietlajaca liczbę zespolną  w formule (a+bi)*/
-void Wyswietl(LZespolona Skl1)
-{
-  cout << "(" << Skl1.re << showpos << Skl1.im << noshowpos << "i)";
-}
-
 
 /*Sprzezenie liczby zespolonej*/
 LZespolona Sprzezenie(LZespolona Skl2)
@@ -72,18 +61,51 @@ LZespolona operator/(LZespolona Skl1, LZespolona Skl2)
 LZespolona operator/(LZespolona Skl1, double Skl2)
 {
   LZespolona Wynik;
-
-  Wynik.re = Skl1.re / Skl2; 
+  if (Skl2 == 0)
+  {
+    throw runtime_error("Dzielenie przez 0\n");
+  }
+  Wynik.re = Skl1.re / Skl2;
   Wynik.im = Skl1.im / Skl2;
   return Wynik;
 }
-/*Prototyp wczytywania przez strumień dla liczby zespolonej*/
- /*istream& operator >> (istream &StrWej, LZespolona Skl1){
+/*Wczytywanie przez strumień dla liczby zespolonej. Funkcja ustawia status "failbit" w momencie, kiedy uzytkownik wpisze niepozadany w danym momencie znak.*/
+istream &operator>>(istream &StrWej, LZespolona &Skl1)
+{
   char nawias_l, nawias_p, i;
-  StrWej >> nawias_l >> Skl1.re >> Skl1.im >> i >> nawias_p;
+
+  StrWej >> nawias_l;
+  if (nawias_l != '(')
+  {
+    StrWej.setstate(ios::failbit);
+  }
+
+  StrWej >> Skl1.re >> Skl1.im >> i;
+  if (i != 'i')
+  {
+    StrWej.setstate(ios::failbit);
+  }
+  StrWej >> nawias_p;
+  if (nawias_p != ')')
+  {
+    StrWej.setstate(ios::failbit);
+  }
   return StrWej;
 }
+/*Wyczytywanie przez strumień dla liczby zespolonej.*/
+ostream &operator<<(ostream &StrWyj, LZespolona Skl1)
+{
+  char nawias_l, nawias_p, i;
+  StrWyj << "(" << Skl1.re << showpos << Skl1.im << noshowpos << "i)";
+  return StrWyj;
+}
+/*Operator porownania. Jezeli wartosc bezwzgledna roznicy dwoch liczb dla ich czesci rzeczywistych i urojonych jest wieksza od wartosci MIN,
+to funkcja zwraca wartosc false. */
+bool operator==(const LZespolona Skl1, const LZespolona Skl2)
+{
 
-void WczytajZnak(istream& StrWej, char znak){
-  
-}*/
+  if (abs(Skl2.re - Skl1.re) <= MIN && abs(Skl2.im - Skl1.im) <= MIN)
+    return true;
+
+  return false;
+}
