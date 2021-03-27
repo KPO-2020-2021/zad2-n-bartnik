@@ -8,65 +8,65 @@
 using namespace std;
 
 /*Sprzezenie liczby zespolonej*/
-LZespolona Sprzezenie(LZespolona Skl2)
+LZespolona LZespolona::Sprzezenie()
 {
   LZespolona Wynik;
-  Wynik.re = Skl2.re;
-  Wynik.im = -Skl2.im;
+  this->re = this->re;
+  this->im = -this->im;
   return Wynik;
 }
 /*Modul podniesiony do kwardatu z liczby zespolonej (wg wzoru |a+bi|^2=a^2+b^2)*/
-double Modul2(LZespolona Skl2)
+double LZespolona::Modul2()
 {
   double Wynik;
-  Wynik = Skl2.re * Skl2.re + Skl2.im * Skl2.im;
+  Wynik = this->re * this->re + this->im * this->im;
   return Wynik;
 }
 
-LZespolona operator+(LZespolona Skl1, LZespolona Skl2)
+LZespolona LZespolona::operator+(LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  Wynik.re = Skl1.re + Skl2.re;
-  Wynik.im = Skl1.im + Skl2.im;
+  Wynik.re = this->re + Skl2.re;
+  Wynik.im = this->im + Skl2.im;
   return Wynik;
 }
 /*Odejmowanie liczb zespolonych analogicznie co dodawanie (zamiana znaku + na -)*/
-LZespolona operator-(LZespolona Skl1, LZespolona Skl2)
+LZespolona LZespolona::operator-(LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  Wynik.re = Skl1.re - Skl2.re;
-  Wynik.im = Skl1.im - Skl2.im;
+  Wynik.re = this->re - Skl2.re;
+  Wynik.im = this->im - Skl2.im;
   return Wynik;
 }
 /*Mnożenie liczb zespolonych na zasadzie wzoru (a+bi)(c+di)=ac+adi+cbi+db(-1)*/
-LZespolona operator*(LZespolona Skl1, LZespolona Skl2)
+LZespolona  LZespolona::operator* (LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  Wynik.re = Skl1.re * Skl2.re - Skl1.im * Skl2.im;
-  Wynik.im = Skl1.re * Skl2.im + Skl2.re * Skl1.im;
+  Wynik.re = this->re * Skl2.re - this->im * Skl2.im;
+  Wynik.im = this->re * Skl2.im + Skl2.re * this->im;
   return Wynik;
 }
 /*Dzielenie przy użyciu wzoru podanego w opisie zadania*/
-LZespolona operator/(LZespolona Skl1, LZespolona Skl2)
+LZespolona LZespolona::operator/(LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  Wynik = (Skl1 * Sprzezenie(Skl2)) / Modul2(Skl2);
+  Wynik = ((*this) * Sprzezenie()) / Modul2();
   return Wynik;
 }
 /*Dzielenie przez skalar*/
-LZespolona operator/(LZespolona Skl1, double Skl2)
+LZespolona LZespolona::operator/(double Skl2)
 {
   LZespolona Wynik;
   if (Skl2 == 0)
   {
     throw runtime_error("Dzielenie przez 0\n");
   }
-  Wynik.re = Skl1.re / Skl2;
-  Wynik.im = Skl1.im / Skl2;
+  Wynik.re = this->re / Skl2;
+  Wynik.im = this->im / Skl2;
   return Wynik;
 }
 /*Wczytywanie przez strumień dla liczby zespolonej. Funkcja ustawia status "failbit" w momencie, kiedy uzytkownik wpisze niepozadany w danym momencie znak.*/
@@ -101,10 +101,10 @@ ostream &operator<<(ostream &StrWyj, LZespolona Skl1)
 }
 /*Operator porownania. Jezeli wartosc bezwzgledna roznicy dwoch liczb dla ich czesci rzeczywistych i urojonych jest wieksza od wartosci MIN,
 to funkcja zwraca wartosc false. */
-bool operator==(const LZespolona Skl1, const LZespolona Skl2)
+bool LZespolona::operator==(const LZespolona Skl2)
 {
 
-  if (abs(Skl2.re - Skl1.re) <= MIN && abs(Skl2.im - Skl1.im) <= MIN)
+  if (abs(Skl2.re - this->re) <= MIN && abs(Skl2.im - this->im) <= MIN)
     return true;
 
   return false;
