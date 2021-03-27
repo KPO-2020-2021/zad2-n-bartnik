@@ -245,7 +245,7 @@ TEST_CASE("test LZespolona Sprzezenie im!=0")
     z.re = 1;
     z.im = -1;
 
-    CHECK(Sprzezenie(y) == z);
+    CHECK(y.Sprzezenie() == z);
 }
 
 TEST_CASE("test LZespolona Sprzezenie im==0")
@@ -258,7 +258,7 @@ TEST_CASE("test LZespolona Sprzezenie im==0")
     z.re = 1;
     z.im = 0;
 
-    CHECK(Sprzezenie(y) == z);
+    CHECK(y.Sprzezenie() == z);
 }
 
 TEST_CASE("test LZespolona Modul2")
@@ -269,7 +269,7 @@ TEST_CASE("test LZespolona Modul2")
     y.re = 1;
     y.im = 1;
 
-    CHECK(Modul2(y) == z);
+    CHECK(y.Modul2() == z);
 }
 
 /*TESTY OPERATOROW*/
@@ -281,7 +281,7 @@ TEST_CASE("test LZespolona Suma")
     z.re = 2;
     z.im = 2;
 
-    CHECK(Oblicz(a) == z);
+    CHECK(a.Oblicz() == z);
 }
 
 TEST_CASE("test LZespolona Roznica")
@@ -292,7 +292,7 @@ TEST_CASE("test LZespolona Roznica")
     z.re = 0;
     z.im = 0;
 
-    CHECK(Oblicz(a) == z);
+    CHECK(a.Oblicz() == z);
 }
 
 TEST_CASE("test LZespolona Mnozenie")
@@ -303,7 +303,7 @@ TEST_CASE("test LZespolona Mnozenie")
     z.re = 0;
     z.im = 2;
 
-    CHECK(Oblicz(a) == z);
+    CHECK(a.Oblicz() == z);
 }
 
 TEST_CASE("test LZespolona Dzielenie")
@@ -314,14 +314,14 @@ TEST_CASE("test LZespolona Dzielenie")
     z.re = 1;
     z.im = 0;
 
-    CHECK(Oblicz(a) == z);
+    CHECK(a.Oblicz() == z);
 }
 /*Statystyka*/
 TEST_CASE("test LZespolona Dzielenie")
 {
     Statystyka a = {5, 10, 0, 0};
-    Oblicz_zle(a);
-    Oblicz(a);
+    a.Oblicz_zle();
+    a.Oblicz();
     CHECK(a.procent == 50);
     CHECK(a.procentz == 50);
 }

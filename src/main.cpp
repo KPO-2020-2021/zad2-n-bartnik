@@ -33,7 +33,7 @@ int main(int argc, char **argv)
   WyrazenieZesp WyrZ_PytanieTestowe;
   LZespolona zespolona, zesp1;
   Statystyka statystyka;
-  Inicjuj(statystyka);
+  statystyka.Inicjuj();
 
   while (PobierzNastpnePytanie(&BazaT, &WyrZ_PytanieTestowe))
   {
@@ -46,30 +46,30 @@ int main(int argc, char **argv)
       cout << "Blad zapisu liczby zespolonej!" << endl;
       cin.clear();             /* 'naprawia' failstate i strumien dziala poprawnie*/
       cin.ignore(99999, '\n'); /*ignoruje 99999 znakow lub do konca linii*/
-      Zlicz_pyt(statystyka); /*Liczy pytanie*/
+      statystyka.Zlicz_pyt();   /*Liczy pytanie*/
     }
     else
     {
-      zesp1 = Oblicz(WyrZ_PytanieTestowe);
+      zesp1 = WyrZ_PytanieTestowe.Oblicz();
       cout << "Poprawny wynik to: " << zesp1 << endl;
     }
     if (zespolona == zesp1)
     {
       cout << "Poprawna odpowiedz" << endl;
-      Zlicz_pyt(statystyka);  /*Liczy pytanie*/
-      Zlicz_pkt(statystyka);  /*Liczy punkt*/
+      statystyka.Zlicz_pyt(); /*Liczy pytanie*/
+      statystyka.Zlicz_pkt(); /*Liczy punkt*/
     }
     else
     {
-      Zlicz_pyt(statystyka);  /*Liczy pytanie*/
+      statystyka.Zlicz_pyt(); /*Liczy pytanie*/
       cout << "Zla odpowiedz";
     }
   }
   cout << endl;
-/*Wyswietlanie koncowej statystyki*/
-  Oblicz(statystyka);
-  Oblicz_zle(statystyka);
-  Wyswietl(statystyka);
+  /*Wyswietlanie koncowej statystyki*/
+  statystyka.Oblicz();
+  statystyka.Oblicz_zle();
+  statystyka.Wyswietl();
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;

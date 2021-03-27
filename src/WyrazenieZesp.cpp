@@ -57,22 +57,22 @@ istream &operator>>(istream &StrWe, WyrazenieZesp &WyrZ)
     return StrWe;
 }
 /*Funkcja wykonuje odpowiednie działanie dla zadanego operatora*/
-LZespolona Oblicz(WyrazenieZesp WyrZ)
+LZespolona WyrazenieZesp::Oblicz()
 {
     LZespolona wynik;
-    switch (WyrZ.Op)
+    switch (this->Op)
     {
     case Op_Dodaj:
-        wynik = WyrZ.Arg1 + WyrZ.Arg2;
+        wynik = this->Arg1 + this->Arg2;
         break;
     case Op_Odejmij:
-        wynik = WyrZ.Arg1 - WyrZ.Arg2;
+        wynik = this->Arg1 - this->Arg2;
         break;
     case Op_Mnoz:
-        wynik = WyrZ.Arg1 * WyrZ.Arg2;
+        wynik = this->Arg1 * this->Arg2;
         break;
     case Op_Dziel:
-        wynik = WyrZ.Arg1 / WyrZ.Arg2;
+        wynik = this->Arg1 / this->Arg2;
         break;
     }
     return wynik;

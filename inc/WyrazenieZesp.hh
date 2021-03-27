@@ -20,14 +20,13 @@ struct WyrazenieZesp {
   LZespolona   Arg1;   // Pierwszy argument wyrazenia arytmetycznego
   Operator     Op;     // Opertor wyrazenia arytmetycznego
   LZespolona   Arg2;   // Drugi argument wyrazenia arytmetycznego
-};
+
 
 
 /* Nagłówki funkcji dla wyrażenia zespolonego*/
 
-//void Wczytaj(WyrazenieZesp &WyrZ);
-//void Wyswietl(WyrazenieZesp  WyrZ);
-LZespolona Oblicz(WyrazenieZesp  WyrZ);
+LZespolona Oblicz();
+};
 istream &operator>>(istream &StrWe, WyrazenieZesp &WyrZ);
 ostream &operator<<(ostream &StrWyj, const WyrazenieZesp &WyrZ);
 
