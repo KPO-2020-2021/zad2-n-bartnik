@@ -2,43 +2,43 @@
 #include <iostream>
 
 /*FUnkcja zeruje kazda zmienna w strukturze Statystyka. Jest to potrzebne do prawidłowego zliczania punktów*/
-void Inicjuj(Statystyka &stat)
+void Statystyka::Inicjuj()
 {
-    stat.punkty = 0;
-    stat.pytania = 0;
-    stat.procent = 0;
-    stat.procentz = 0;
+    this->punkty = 0;
+    this->pytania = 0;
+    this->procent = 0;
+    this->procentz = 0;
 }
 
 /*Funkcja wyswietla statystyke*/
-void Wyswietl(Statystyka stat)
+void Statystyka::Wyswietl()
 {
 
-    cout << "Liczba uzyskanych punktów: " << stat.punkty << endl;
-    cout << "Liczba pytań " << stat.pytania << endl;
-    cout << "Liczba punktów w procentach: " << stat.procent<< "%"<< endl;
-    cout << "Liczba blednych odp w procentach: " << stat.procentz<< "%"<< endl;
+    cout << "Liczba uzyskanych punktów: " << this->punkty << endl;
+    cout << "Liczba pytań " << this->pytania << endl;
+    cout << "Liczba punktów w procentach: " << this->procent<< "%"<< endl;
+    cout << "Liczba blednych odp w procentach: " << this->procentz<< "%"<< endl;
 }
 
 /*Funkcja oblicza procentowy wynik*/
-void Oblicz(Statystyka &stat)
+void Statystyka::Oblicz()
 {
-    stat.procent = stat.punkty*100.0 / stat.pytania ;
+    this->procent = this->punkty*100.0 / this->pytania ;
 }
 
 /*Funkcja oblicza ilosc pytan*/
-void Zlicz_pyt (Statystyka &stat){
-    stat.pytania++;
+void Statystyka::Zlicz_pyt (){
+    this->pytania++;
 }
 
 /*Funkcja oblicza ilosc zdobytych punktow*/
-void Zlicz_pkt (Statystyka &stat){
-    stat.punkty++;
+void Statystyka::Zlicz_pkt (){
+    this->punkty++;
 }
 /*Funkcja oblicza procentowy wynik dla zlych odpowiedzi*/
-void Oblicz_zle(Statystyka &stat)
+void Statystyka::Oblicz_zle()
 {
-    stat.procentz = (stat.pytania-stat.punkty)*100.0 / stat.pytania;
+    this->procentz = (this->pytania-this->punkty)*100.0 / this->pytania;
 }
 
 using namespace std;
