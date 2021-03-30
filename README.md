@@ -35,4 +35,20 @@ Repozytorium z zalążkiem do zadania ma następującą strukturę:
 [Strona kursu z Programowania Obiektowego](https://kcir.pwr.edu.pl/~kreczmer/po/)
 
 
-
+###############################################################
+Kompilowanie i uruchamianie (opcja run zmieniona na opcje latwy lub trudny):
+make clean
+make 
+make latwy/trudny
+###############################################################
+Wczytywanie z pliku:
+Stworzone dwa pliki tekstowe: spr1, spr2. Plik spr1 jest przypisany dla wyświetlania testu łatwego, plik spr2 jest przypisany dla wyświetlania dla testu trudnego. 
+Testy są jedynie przykładowe i nie mają odzwierciedlenia w rzeczywistym poziomie trudności.
+W strukturze BazaTestu utworzona jest specjalna zmienna typu fstream dla pliku. 
+W kodzie dla bazy testu  wskaźnik bazy (wskBazaTestu) wskazuje na plik i go otwiera. Następnie następuje sprawdzanie czy, czy plik został otworzony poprawnie. 
+Na końcu wczytywane jest każde kolejne pytanie aż do końca  i w przypadku niewłaściwego zapisu wyświetlany jest odpowiedni 
+##############################################################
+Problemy:
+*Największy problem pojawił się przy porównywaniu liczb do odpowiednich miejsc po przecinku w testach.
+Testy działają, ale tylko dla wprowadzonych w tym momencie wartości. Dla większej ilości liczb po przecinku testy pokazują błąd. 
+*Program wyświetla ostrzeżenia o nieużywanych zmiennych, pomimo tego, że są one używane do porówny2wania (plik LZespolona.cpp).
