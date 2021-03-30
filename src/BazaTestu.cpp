@@ -6,24 +6,6 @@
 using namespace std;
 
 /*
- * Tablica, ktora jest widoczna tylko w tym module.
- * Zawiera ona tresc latwego testu.
- */
-static WyrazenieZesp  TestLatwy[] =
-  { {{2,1}, Op_Dodaj, {1,2}},
-    {{1,0}, Op_Odejmij, {0,1}},
-    {{3,0}, Op_Mnoz, {0,3}},
-    {{4,8}, Op_Dziel, {1,0}},
-  };
-/*Przykładowy test w opcji trudnej, przekopiowany z pierwszego, by sprawdzić wywoływanie opcji*/
-static WyrazenieZesp  TestTrudny[] =
-  { {{2,1}, Op_Dodaj, {1,2}},
-    {{1,0}, Op_Odejmij, {0,1}},
-    {{3,0}, Op_Mnoz, {0,3}},
-    {{4,8}, Op_Dziel, {1,0}},
-  };
-
-/*
  * W bazie testu ustawia wybrany test jako biezacy test i indeks pytania
  * ustawia na pierwsze z nich.
  * Parametry:
@@ -40,15 +22,12 @@ static WyrazenieZesp  TestTrudny[] =
  *      - Parametr IloscPytan zawiera wartosc, ktora nie przekracza ilosci elementow
  *        w tablicy dostepnej poprzez wskTabTestu.
  */
-void UstawTest( BazaTestu *wskBazaTestu, WyrazenieZesp *wskTabTestu, unsigned int IloscPytan )
+void UstawTest(BazaTestu *wskBazaTestu, WyrazenieZesp *wskTabTestu, unsigned int IloscPytan)
 {
   wskBazaTestu->wskTabTestu = wskTabTestu;
   wskBazaTestu->IloscPytan = IloscPytan;
   wskBazaTestu->IndeksPytania = 0;
 }
-
-
-
 
 /*
  * Inicjalizuje test kojarzac zmienna dostepna poprzez wskaznik wskBazaTestu
@@ -69,26 +48,35 @@ void UstawTest( BazaTestu *wskBazaTestu, WyrazenieZesp *wskTabTestu, unsigned in
  *              zainicjalizowany,
  *       false - w przypadku przeciwnym.
  */
-bool InicjalizujTest( BazaTestu  *wskBazaTestu, const char *sNazwaTestu )
+bool InicjalizujTest(BazaTestu *wskBazaTestu, const char *sNazwaTestu)
 {
-  if (!strcmp(sNazwaTestu,"latwy")) {
-    UstawTest(wskBazaTestu,TestLatwy,sizeof(TestLatwy)/sizeof(WyrazenieZesp));
-    return true;
-  }
-  if (!strcmp(sNazwaTestu,"trudny")) {
-    UstawTest(wskBazaTestu,TestTrudny,sizeof(TestTrudny)/sizeof(WyrazenieZesp));
-    return true;
-  }
+  if (!strcmp(sNazwaTestu, "latwy"))
+  { /*otwieranei wyrażeń z pliku dla polecenia latwy*/
 
-  /*
-   * Analogicznie zrob inicjalizacje dla testu trudne
-   */
+    wskBazaTestu->plik.open("spr1", ios::in);
+    if (!wskBazaTestu->plik.good()) /*sprawdzanie, czy plik został poprawnie otworzony*/
+    {
+      cerr << "Otwarcie testu '" << sNazwaTestu << "' nie powiodlo sie." << endl;
+      return false;
+    }
+    return true;
+  }
+  /*analogicznie dla testu trudnego*/
+  if (!strcmp(sNazwaTestu, "trudny"))
+  {
+
+    wskBazaTestu->plik.open("spr2", ios::in);
+    if (!wskBazaTestu->plik.good())
+    {
+      cerr << "Otwarcie testu '" << sNazwaTestu << "' nie powiodlo sie." << endl;
+      return false;
+    }
+    return true;
+  }
 
   cerr << "Otwarcie testu '" << sNazwaTestu << "' nie powiodlo sie." << endl;
   return false;
 }
-
-
 
 /*!
  * Funkcja udostepnia nastepne pytania o ile jest odpowiednia ich ilosc.
@@ -109,11 +97,25 @@ bool InicjalizujTest( BazaTestu  *wskBazaTestu, const char *sNazwaTestu )
  *              przypisane nowe wyrazenie zespolone z bazy,
  *       false - w przypadku przeciwnym.
  */
-bool PobierzNastpnePytanie( BazaTestu  *wskBazaTestu, WyrazenieZesp *wskWyrazenie )
+bool PobierzNastpnePytanie(BazaTestu *wskBazaTestu, WyrazenieZesp *wskWyrazenie)
 {
-  if (wskBazaTestu->IndeksPytania >= wskBazaTestu->IloscPytan) return false;
+  while (!wskBazaTestu->plik.eof()) /*sprawdzanie końca pliku*/
+  {
+    wskBazaTestu->plik >> *wskWyrazenie; /*Sprawdzenie wczytywania wyrazenia zespolonego z pliku*/
 
-  *wskWyrazenie = wskBazaTestu->wskTabTestu[wskBazaTestu->IndeksPytania];
-  ++wskBazaTestu->IndeksPytania;
+    if (wskBazaTestu->plik.fail())
+    {
+      cout << "Blad zapisu liczby wyrazenia!" << endl; /*wyswietlanie komunikatu, gdy wyrazenie nie ma poprawnej formy*/
+      wskBazaTestu->plik.clear();                      /* 'naprawia' failstate i strumien dziala poprawnie*/
+      wskBazaTestu->plik.ignore(99999, '\n');          /*ignoruje 99999 znakow lub do konca linii*/
+    }
+    else
+    {
+      break;
+    }
+  }
+  if (wskBazaTestu->plik.eof()) /*sprawdzanie końca pliku*/
+    return false;
+
   return true;
 }

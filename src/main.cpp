@@ -37,22 +37,29 @@ int main(int argc, char **argv)
 
   while (PobierzNastpnePytanie(&BazaT, &WyrZ_PytanieTestowe))
   {
+    int m = 0;
     cout << " Podaj wynik wyrazenia:  ";
-    cout << WyrZ_PytanieTestowe << " "; /*Sprawdzenie wyświetlania pytania*/
-    cin >> zespolona;                   /*Sprawdzenie wczytywania liczby zespolonej*/
-    /*Operacje, ktore dzieja sie w przypadku gdy uzytkownik wpisze nieprawidlowe znaki*/
-    if (cin.fail())
+    cout << WyrZ_PytanieTestowe << "= ";   /*Sprawdzenie wyświetlania pytania*/
+    zesp1 = WyrZ_PytanieTestowe.Oblicz(); /*oblicza wyrazenie*/
+    /*Wczytywanie wyrazenia w petli w przypadku, gdy uzytkownik nie wpisze wyrazenia w poprawnej postaci*/
+    while (m < 3)
     {
-      cout << "Blad zapisu liczby zespolonej!" << endl;
-      cin.clear();             /* 'naprawia' failstate i strumien dziala poprawnie*/
-      cin.ignore(99999, '\n'); /*ignoruje 99999 znakow lub do konca linii*/
-      statystyka.Zlicz_pyt();   /*Liczy pytanie*/
+      cin >> zespolona; 
+      cout<<endl;
+      /*Operacje, ktore dzieja sie w przypadku gdy uzytkownik wpisze nieprawidlowe znaki*/
+      if (cin.fail())
+      {
+        cout << "Blad zapisu liczby zespolonej!" << endl;
+        cin.clear();             /* 'naprawia' failstate i strumien dziala poprawnie*/
+        cin.ignore(99999, '\n'); /*ignoruje 99999 znakow lub do konca linii*/
+        m++;                     /*licznik petli*/
+      }
+      else
+      {
+        break;
+      }
     }
-    else
-    {
-      zesp1 = WyrZ_PytanieTestowe.Oblicz();
-      cout << "Poprawny wynik to: " << zesp1 << endl;
-    }
+
     if (zespolona == zesp1)
     {
       cout << "Poprawna odpowiedz" << endl;
@@ -62,7 +69,7 @@ int main(int argc, char **argv)
     else
     {
       statystyka.Zlicz_pyt(); /*Liczy pytanie*/
-      cout << "Zla odpowiedz";
+      cout << "Zla odpowiedz"<<endl;
     }
   }
   cout << endl;
