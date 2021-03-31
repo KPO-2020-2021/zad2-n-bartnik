@@ -20,6 +20,33 @@ TEST_CASE("test LZespolona Suma")
     CHECK(x + y == z);
 }
 
+TEST_CASE("test LZespolona dodawanie +=")
+{
+    LZespolona z, wynik,a, wynik1;
+
+    z.re = 1;
+    z.im = 1;
+    a.re=1;
+    a.im=1;
+    wynik.re=2;
+    wynik.im=2;
+    wynik1=operator+=(z,a);
+    CHECK(wynik1 ==wynik);
+}
+TEST_CASE("test LZespolona Suma2")
+{
+    LZespolona x, z,wynik;
+
+    x.re = 1;
+    x.im = 1;
+
+    z.re = 1;
+    z.im = 1;
+
+    wynik=operator/=(x,z);
+    CHECK(wynik.re == 1);
+    CHECK(wynik.im == 1);
+}
 TEST_CASE("test LZespolona Suma")
 {
     LZespolona x, y, z;
@@ -317,7 +344,7 @@ TEST_CASE("test LZespolona Dzielenie")
     CHECK(a.Oblicz() == z);
 }
 /*Statystyka*/
-TEST_CASE("test LZespolona Dzielenie")
+TEST_CASE("test Statystyka")
 {
     Statystyka a = {5, 10, 0, 0};
     a.Oblicz_zle();

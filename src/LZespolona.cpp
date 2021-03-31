@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
-#define M_PI 3.14159;
+// #define M_PI 3.14159;
 #include "LZespolona.hh"
 #include "Statystyki.hh"
 
@@ -112,29 +112,36 @@ bool LZespolona::operator==(const LZespolona Skl2) const
   return false;
 }
 
-LZespolona LZespolona::operator+=(LZespolona const &Arg2)
+LZespolona &operator+= (LZespolona &Arg1, LZespolona const &Arg2)
 {
-  (*this) = (*this) + Arg2;
+  Arg1 = Arg1 + Arg2;
+  return Arg1;
 }
-LZespolona LZespolona::operator/=(LZespolona &Arg2)
+LZespolona&operator/=(LZespolona &Arg1, LZespolona &Arg2)
 {
   LZespolona Wynik;
+  if (Arg2.re != 0 || Arg2.im != 0)
+  {
 
-  Wynik = ((*this) * Arg2.Sprzezenie()) / Arg2.Modul2();
-  return Wynik;
+    Wynik = (Arg1 / Arg2);
+  }
+  else
+  {
+    throw runtime_error("Dzielenie przez 0\n");
+  } return Arg1;
 }
-
 double arg(LZespolona z)
 {
   double wynik;
   if (z.re > 0)
   {
     wynik = atan2(z.im, z.re);
-    cout<<wynik;
+    cout << wynik;
   }
   else
   {
     wynik = atan2(z.im, z.re) + M_PI;
-    cout<<wynik;
+    cout << wynik;
   }
+  return wynik;
 }
