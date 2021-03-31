@@ -2,18 +2,20 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#define M_PI 3.14159;
 #include "LZespolona.hh"
 #include "Statystyki.hh"
+
 #define MIN 0.001 /*Minimalna wartosc roznicy dla operatora porownania*/
 using namespace std;
 
 /*Sprzezenie liczby zespolonej*/
 LZespolona LZespolona::Sprzezenie()
 {
-  LZespolona Wynik;
+
   this->re = this->re;
   this->im = -this->im;
-  return Wynik;
+  return *this;
 }
 /*Modul podniesiony do kwardatu z liczby zespolonej (wg wzoru |a+bi|^2=a^2+b^2)*/
 double LZespolona::Modul2()
@@ -41,7 +43,7 @@ LZespolona LZespolona::operator-(LZespolona Skl2)
   return Wynik;
 }
 /*Mnożenie liczb zespolonych na zasadzie wzoru (a+bi)(c+di)=ac+adi+cbi+db(-1)*/
-LZespolona  LZespolona::operator* (LZespolona Skl2)
+LZespolona LZespolona::operator*(LZespolona Skl2)
 {
   LZespolona Wynik;
 
@@ -54,7 +56,7 @@ LZespolona LZespolona::operator/(LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  Wynik = ((*this) * Sprzezenie()) / Modul2();
+  Wynik = ((*this) * Skl2.Sprzezenie()) / Skl2.Modul2();
   return Wynik;
 }
 /*Dzielenie przez skalar*/
@@ -101,11 +103,38 @@ ostream &operator<<(ostream &StrWyj, LZespolona Skl1)
 }
 /*Operator porownania. Jezeli wartosc bezwzgledna roznicy dwoch liczb dla ich czesci rzeczywistych i urojonych jest wieksza od wartosci MIN,
 to funkcja zwraca wartosc false. */
-bool LZespolona::operator==(const LZespolona Skl2)
+bool LZespolona::operator==(const LZespolona Skl2) const
 {
 
   if (abs(Skl2.re - this->re) <= MIN && abs(Skl2.im - this->im) <= MIN)
     return true;
 
   return false;
+}
+
+LZespolona LZespolona::operator+=(LZespolona const &Arg2)
+{
+  (*this) = (*this) + Arg2;
+}
+LZespolona LZespolona::operator/=(LZespolona &Arg2)
+{
+  LZespolona Wynik;
+
+  Wynik = ((*this) * Arg2.Sprzezenie()) / Arg2.Modul2();
+  return Wynik;
+}
+
+double arg(LZespolona z)
+{
+  double wynik;
+  if (z.re > 0)
+  {
+    wynik = atan2(z.im, z.re);
+    cout<<wynik;
+  }
+  else
+  {
+    wynik = atan2(z.im, z.re) + M_PI;
+    cout<<wynik;
+  }
 }
